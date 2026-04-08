@@ -618,7 +618,7 @@ a:hover { text-decoration: underline; }
         <div class="hero-stat-label">платформ проанализировано</div>
       </div>
       <div>
-        <div class="hero-stat-num">13</div>
+        <div class="hero-stat-num">17</div>
         <div class="hero-stat-label">детальных UX-разборов</div>
       </div>
       <div>
@@ -680,6 +680,8 @@ a:hover { text-decoration: underline; }
         <div class="landscape-item">Vidu <span class="score">6/10</span></div>
         <div class="landscape-item">Krea <span class="score">8/10</span></div>
         <div class="landscape-item">Higgsfield <span class="score">7/10</span></div>
+        <div class="landscape-item">OpenArt <span class="score">7/10</span></div>
+        <div class="landscape-item">Mosaic <span class="score">5/10</span></div>
       </div>
       <div class="landscape-col">
         <h4>Production Platforms</h4>
@@ -689,6 +691,7 @@ a:hover { text-decoration: underline; }
         <div class="landscape-item">InVideo AI <span class="score">8/10</span></div>
         <div class="landscape-item">Descript <span class="score">4/10</span></div>
         <div class="landscape-item">CapCut <span class="score">5/10</span></div>
+        <div class="landscape-item">Syntx.AI <span class="score">5/10</span></div>
       </div>
       <div class="landscape-col">
         <h4>Serial Content</h4>
@@ -717,7 +720,7 @@ a:hover { text-decoration: underline; }
 <section class="section" id="platforms">
   <div class="container">
     <p class="label">Platform Profiles</p>
-    <h2 class="headline-l mt-8">13 платформ — поэкранный разбор</h2>
+    <h2 class="headline-l mt-8">17 платформ — поэкранный разбор</h2>
     <p class="body-m mt-8">Каждая платформа: ключевой паттерн, скриншоты, плюсы/минусы, что берём для Klyp.</p>
 
     <!-- LTX Studio -->
@@ -1326,14 +1329,6 @@ a:hover { text-decoration: underline; }
       <div class="platform-key-pattern">
         <strong>Key Pattern:</strong> StoReel Canvas — полный production pipeline, но не self-serve. Vigloo — первый creator dashboard с Performance + Revenue + AI insights. Подтверждение product-market fit.
       </div>
-      <div class="platform-screenshots">
-        <img src="screenshots/syntx-01-seedance-main.jpg" alt="Syntx Main" onclick="openLightbox(this)">
-        <img src="screenshots/syntx-design-tab.jpg" alt="Syntx Design" onclick="openLightbox(this)">
-        <img src="screenshots/syntx-audio-tab.jpg" alt="Syntx Audio" onclick="openLightbox(this)">
-        <img src="screenshots/syntx-text-tab.jpg" alt="Syntx Text" onclick="openLightbox(this)">
-        <img src="screenshots/syntx-seedance-video.jpg" alt="Syntx Seedance" onclick="openLightbox(this)">
-        <img src="screenshots/syntx-video-back.jpg" alt="Syntx Video Back" onclick="openLightbox(this)">
-      </div>
       <div class="platform-grid">
         <div class="platform-col pros">
           <h4 class="green-label">Сильные стороны</h4>
@@ -1356,6 +1351,202 @@ a:hover { text-decoration: underline; }
           <ul>
             <li>Vigloo: Performance + Revenue dashboard model</li>
             <li>StoReel: подтверждение product-market fit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- OpenArt -->
+    <div class="platform-card" id="openart">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">OpenArt</div>
+          <div class="platform-url">openart.ai</div>
+          <div class="platform-desc">AI Creator Studio с полным suite: Story, Video, Image, Character, World, Audio. Multi-model aggregator (Seedance 2.0, Kling, LTX-2). Зелёный акцент, workspace-based.</div>
+        </div>
+        <div class="score-badge medium">7/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Suite-based подход — 6 категорий инструментов (Story, Video, Image, Character, World, Audio) в одном workspace. Multi-model: Text to Video, Frame to Video, Motion Sync, Lip-Sync, Edit Video — всё в одном месте.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/openart-suite-home.jpg" alt="OpenArt Suite Home" onclick="openLightbox(this)">
+        <img src="screenshots/openart-home.jpg" alt="OpenArt Home" onclick="openLightbox(this)">
+        <img src="screenshots/openart-video.jpg" alt="OpenArt Video Tools" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Suite-подход: 6 категорий в одном workspace</li>
+            <li>Multi-model aggregation (Seedance, Kling, LTX)</li>
+            <li>Character + World как first-class entities</li>
+            <li>«What would you like to create today?» — дружелюбный entry</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Зелёный акцент — та же «казиношная» эстетика, что у Kling</li>
+            <li>«Upgrade» давление в UI</li>
+            <li>Sidebar с Pinned tools = flat list без структуры</li>
+            <li>Нет pipeline visualization, нет serial content</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Suite категоризация инструментов</li>
+            <li>Character + World как отдельные сущности</li>
+            <li>Multi-model selection с прозрачностью</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Higgsfield -->
+    <div class="platform-card" id="higgsfield">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Higgsfield</div>
+          <div class="platform-url">higgsfield.ai</div>
+          <div class="platform-desc">Multi-model AI video generator с Cinema Studio для кинематографичного контента. Camera controls, 250+ presets, Original Series. Жёлто-зелёный акцент.</div>
+        </div>
+        <div class="score-badge medium">7/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Cinema Studio — виртуальные камеры с lens types, focal lengths, depth of field. «MAKE VIDEOS IN ONE CLICK» с 250+ presets для camera control. 3-step visual flow: Add Image → Choose Preset → Get Video.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/higgsfield-create-video.jpg" alt="Higgsfield Create" onclick="openLightbox(this)">
+        <img src="screenshots/higgsfield-create-video-scroll.jpg" alt="Higgsfield Scroll" onclick="openLightbox(this)">
+        <img src="screenshots/higgsfield-landing.jpg" alt="Higgsfield Landing" onclick="openLightbox(this)">
+        <img src="screenshots/higgsfield-features.jpg" alt="Higgsfield Features" onclick="openLightbox(this)">
+        <img src="screenshots/higgsfield-more.jpg" alt="Higgsfield More" onclick="openLightbox(this)">
+        <img src="screenshots/higgsfield-cinema.jpg" alt="Higgsfield Cinema Studio" onclick="openLightbox(this)">
+        <img src="screenshots/higgsfield-influencer-2.jpg" alt="Higgsfield Influencer" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Cinema Studio — professional camera controls</li>
+            <li>Multi-model в одном UI (Kling 3.0, Sora 2, Veo 3.1)</li>
+            <li>250+ presets для camera/motion</li>
+            <li>«Original Series» — попытка serial content</li>
+            <li>3-step visual onboarding</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Жёлто-зелёный акцент (#C8FF00) — агрессивный</li>
+            <li>«SEEDANCE 2.0 OFFICIAL ACCESS» промо-баннер вверху</li>
+            <li>Aggressive credit: 8.75 за один клип</li>
+            <li>Нет pipeline, нет publishing console</li>
+            <li>Cinema Studio не прогрузился — нестабильность</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Cinema camera presets для Stage 4 (Refinement)</li>
+            <li>3-step visual onboarding flow</li>
+            <li>Multi-model selector с badge (TOP, NEW)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Syntx.AI -->
+    <div class="platform-card" id="syntx">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Syntx.AI (Syntax)</div>
+          <div class="platform-url">syntx.ai</div>
+          <div class="platform-desc">ChatGPT-style обёртка над AI-моделями. Multi-modal: text + image + video + audio (Suno). Популярен в СНГ. Seedance интеграция.</div>
+        </div>
+        <div class="score-badge low">5/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Multi-modal tabs (Design, Text, Audio, Video) — каждый таб = другая AI-модель. Chatbot layout с боковой панелью настроек. Валидирует потребность в «всё в одном месте», но через chat-first = антипаттерн.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/syntx-01-seedance-main.jpg" alt="Syntx Main" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-design-tab.jpg" alt="Syntx Design" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-audio-tab.jpg" alt="Syntx Audio" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-text-tab.jpg" alt="Syntx Text" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-seedance-video.jpg" alt="Syntx Seedance" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-video-back.jpg" alt="Syntx Settings" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Multi-modal coverage (text + image + video + audio)</li>
+            <li>Популярен в СНГ — близко к нашему рынку</li>
+            <li>Seedance интеграция, Suno для музыки</li>
+            <li>Collapsible settings sidebar</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Chat-first = антипаттерн для production</li>
+            <li>ChatGPT skin, нет собственного UX</li>
+            <li>Нет pipeline, нет character management</li>
+            <li>Нет serial content, нет publishing</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Multi-modal coverage подтверждает: креаторы хотят всё в одном</li>
+            <li>СНГ популярность — мониторить конкурента</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mosaic -->
+    <div class="platform-card" id="mosaic">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Mosaic</div>
+          <div class="platform-url">mosaic.so</div>
+          <div class="platform-desc">Template-based video editor с community focus. Icon sidebar, Video Spotlight, Featured Templates. UGC + Motion Graphics шаблоны.</div>
+        </div>
+        <div class="score-badge low">5/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Template-driven discovery — «Explore» как главный экран. Video Spotlight + Featured Templates. Community-first: «see what creators are building». Минималистичный icon sidebar.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/mosaic-explore.jpg" alt="Mosaic Explore" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Template discovery как entry point</li>
+            <li>Community showcase — social proof</li>
+            <li>Clean minimal UI, icon sidebar</li>
+            <li>UGC + Motion Graphics категоризация</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Template-only — нет AI generation pipeline</li>
+            <li>Icon-only sidebar без лейблов</li>
+            <li>Нет character management, нет serial content</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Template discovery flow для onboarding</li>
+            <li>Community video showcase как inspiration</li>
           </ul>
         </div>
       </div>
@@ -1924,7 +2115,7 @@ a:hover { text-decoration: underline; }
      ═══════════════════════════════════════════ -->
 <footer class="footer">
   <p>Klyp Competitive Research &bull; Валерий, Design Lead &bull; April 2026</p>
-  <p style="margin-top: 4px; color: var(--ink-4)">60+ платформ &bull; 13 детальных UX-разборов &bull; 75 скриншотов &bull; 4 research-потока</p>
+  <p style="margin-top: 4px; color: var(--ink-4)">60+ платформ &bull; 17 детальных UX-разборов &bull; 80+ скриншотов &bull; 4 research-потока</p>
 </footer>
 
 <!-- ═══════════════════════════════════════════
