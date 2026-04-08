@@ -594,8 +594,6 @@ a:hover { text-decoration: underline; }
     <a href="#differentiators" class="nav-link">Differentiators</a>
     <span class="nav-divider"></span>
     <a href="#threats" class="nav-link">Threats</a>
-    <a href="#blueprint" class="nav-link">Blueprint</a>
-    <a href="#next" class="nav-link">Next Steps</a>
   </div>
 </nav>
 
@@ -1762,20 +1760,12 @@ a:hover { text-decoration: underline; }
      ═══════════════════════════════════════════ -->
 <section class="section" id="antipatterns">
   <div class="container">
-    <p class="label">Top 10 Anti-Patterns</p>
+    <p class="label">Anti-Patterns</p>
     <h2 class="headline-l mt-8">Что не работает — избегаем</h2>
 
     <div class="pattern-list">
       <div class="pattern-item bad">
         <div class="pattern-num">1</div>
-        <div>
-          <div class="pattern-title">Chat-First Interface</div>
-          <div class="pattern-source">Descript</div>
-          <div class="pattern-desc">«What can I help you with?» + text input по центру. Zero visual feedback, no pipeline visibility. Для production serial content — катастрофа.</div>
-        </div>
-      </div>
-      <div class="pattern-item bad">
-        <div class="pattern-num">2</div>
         <div>
           <div class="pattern-title">Tab-Based Fragmentation</div>
           <div class="pattern-source">Kling — Image / Video / Motion / Avatar</div>
@@ -1783,7 +1773,7 @@ a:hover { text-decoration: underline; }
         </div>
       </div>
       <div class="pattern-item bad">
-        <div class="pattern-num">3</div>
+        <div class="pattern-num">2</div>
         <div>
           <div class="pattern-title">Пустые Empty States</div>
           <div class="pattern-source">Kling Video, CapCut</div>
@@ -1791,7 +1781,7 @@ a:hover { text-decoration: underline; }
         </div>
       </div>
       <div class="pattern-item bad">
-        <div class="pattern-num">4</div>
+        <div class="pattern-num">3</div>
         <div>
           <div class="pattern-title">Promotional Noise в рабочей зоне</div>
           <div class="pattern-source">Kling «Subscribe!», Vidu «40% OFF», Pika QR-модал</div>
@@ -1799,7 +1789,7 @@ a:hover { text-decoration: underline; }
         </div>
       </div>
       <div class="pattern-item bad">
-        <div class="pattern-num">5</div>
+        <div class="pattern-num">4</div>
         <div>
           <div class="pattern-title">Icon-Only Navigation</div>
           <div class="pattern-source">Vidu — «R2V», «I2V», «T2V»</div>
@@ -1807,7 +1797,7 @@ a:hover { text-decoration: underline; }
         </div>
       </div>
       <div class="pattern-item bad">
-        <div class="pattern-num">6</div>
+        <div class="pattern-num">5</div>
         <div>
           <div class="pattern-title">«Auto» Mode без Visibility</div>
           <div class="pattern-source">Descript</div>
@@ -1815,7 +1805,7 @@ a:hover { text-decoration: underline; }
         </div>
       </div>
       <div class="pattern-item bad">
-        <div class="pattern-num">7</div>
+        <div class="pattern-num">6</div>
         <div>
           <div class="pattern-title">Timeline-First Layout</div>
           <div class="pattern-source">CapCut</div>
@@ -1823,7 +1813,7 @@ a:hover { text-decoration: underline; }
         </div>
       </div>
       <div class="pattern-item bad">
-        <div class="pattern-num">8</div>
+        <div class="pattern-num">7</div>
         <div>
           <div class="pattern-title">Одинаковый Layout для разных задач</div>
           <div class="pattern-source">Luma</div>
@@ -1831,7 +1821,7 @@ a:hover { text-decoration: underline; }
         </div>
       </div>
       <div class="pattern-item bad">
-        <div class="pattern-num">9</div>
+        <div class="pattern-num">8</div>
         <div>
           <div class="pattern-title">Зелёный неоновый акцент</div>
           <div class="pattern-source">Kling — #7CFF00</div>
@@ -1839,7 +1829,7 @@ a:hover { text-decoration: underline; }
         </div>
       </div>
       <div class="pattern-item bad">
-        <div class="pattern-num">10</div>
+        <div class="pattern-num">9</div>
         <div>
           <div class="pattern-title">Feature Soup / «All-in-One»</div>
           <div class="pattern-source">CapCut Home</div>
@@ -1950,140 +1940,6 @@ a:hover { text-decoration: underline; }
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════
-     BLUEPRINT
-     ═══════════════════════════════════════════ -->
-<section class="section" id="blueprint">
-  <div class="container">
-    <p class="label">Klyp Blueprint</p>
-    <h2 class="headline-l mt-8">Архитектура Video Editor — синтез 13 платформ</h2>
-
-    <div class="principles-grid">
-      <div class="principle">
-        <div class="principle-num">1</div>
-        <div>
-          <h5>Content-Centered</h5>
-          <p>Preview 9:16 всегда по центру</p>
-        </div>
-      </div>
-      <div class="principle">
-        <div class="principle-num">2</div>
-        <div>
-          <h5>Stage-Driven</h5>
-          <p>6 этапов как horizontal stepper</p>
-        </div>
-      </div>
-      <div class="principle">
-        <div class="principle-num">3</div>
-        <div>
-          <h5>Ingredients First</h5>
-          <p>Visual selectors → Sliders → Text prompt last</p>
-        </div>
-      </div>
-      <div class="principle">
-        <div class="principle-num">4</div>
-        <div>
-          <h5>Entity-Based</h5>
-          <p>Characters/Locations/Objects как reusable entities</p>
-        </div>
-      </div>
-      <div class="principle">
-        <div class="principle-num">5</div>
-        <div>
-          <h5>Serial-Native</h5>
-          <p>Episode History, Character Persistence, Season Templates</p>
-        </div>
-      </div>
-      <div class="principle">
-        <div class="principle-num">6</div>
-        <div>
-          <h5>Dual Mode</h5>
-          <p>Guided / Full Control в одном UI</p>
-        </div>
-      </div>
-      <div class="principle">
-        <div class="principle-num">7</div>
-        <div>
-          <h5>Pipeline Transparency</h5>
-          <p>Файлы текут между AI-сервисами, visible monitor</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="blueprint-box"><span class="dim">Master Layout: 1440 × 900</span>
-
-<span class="dim">┌──────────────────────────────────────────────────────────────────────────────────┐</span>
-<span class="hl">│ ◉ Klyp  │</span> <span class="g">[① Characters]</span> <span class="g">[② Scenes]</span> <span class="g">[③ Generate]</span> <span class="g">[④ Refine]</span> <span class="g">[⑤ Audio]</span> <span class="g">[⑥ Export]</span> <span class="dim">│</span> <span class="hl">[Guided ↔ Full]</span> <span class="dim">│</span> <span class="hl">⚡ 342</span>
-<span class="dim">├─────────┼──────────────────────────────────────────────────────────────┤────────────┤</span>
-<span class="dim">│         │                                                              │            │</span>
-<span class="dim">│</span> SIDEBAR <span class="dim">│                      </span><span class="hl">STAGE CONTENT</span><span class="dim">                          │  </span><span class="hl">CONTROLS</span><span class="dim">   │</span>
-<span class="dim">│</span> 200px   <span class="dim">│                      </span>(adaptive per stage)<span class="dim">                   │  </span>PANEL<span class="dim">      │</span>
-<span class="dim">│         │                                                              │  </span>320px<span class="dim">      │</span>
-<span class="dim">│ ─────── │                  ┌─────────────────────┐                     │            │</span>
-<span class="dim">│</span>Dashboard<span class="dim">│                  │                     │                     │ ┌────────┐ │</span>
-<span class="dim">│</span> Library <span class="dim">│                  │   </span><span class="hl">PREVIEW 9:16</span><span class="dim">      │                     │ │Params  │ │</span>
-<span class="dim">│</span><span class="g">&gt;Editor</span><span class="dim">  │                  │   centered          │                     │ │[Slider]│ │</span>
-<span class="dim">│</span>Analytics<span class="dim">│                  │   360 × 640         │                     │ │[Cards] │ │</span>
-<span class="dim">│</span>Earnings <span class="dim">│                  │                     │                     │ │Model: v│ │</span>
-<span class="dim">│</span>Referral <span class="dim">│                  └─────────────────────┘                     │ └────────┘ │</span>
-<span class="dim">│         │      [◄ prev]  Shot 3 of 12  [next ►]                     │            │</span>
-<span class="dim">│         │                                                              │ [</span><span class="hl">⚡Generate</span><span class="dim">]│</span>
-<span class="dim">├─────────┴──────────────────────────────────────────────────────────────┴────────────┤</span>
-<span class="dim">│</span> <span class="g">Pipeline:</span> Characters <span class="g">✓</span> → Scenes <span class="g">✓</span> → Shot 1 <span class="g">✓</span>  Shot 2 <span class="g">✓</span>  Shot 3 <span class="hl">◐ 67%</span>  → Shot 4 ○    <span class="dim">│</span>
-<span class="dim">│</span> <span class="hl">[Sora 2 processing... Est: 2 min]</span>                                                   <span class="dim">│</span>
-<span class="dim">└──────────────────────────────────────────────────────────────────────────────────────┘</span></div>
-
-    <p class="body-s mt-24">Sidebar 200px (fixed) + Stage Content 600px (fluid) + Controls 320px (fixed) + Bottom Pipeline Monitor 40px</p>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     NEXT STEPS
-     ═══════════════════════════════════════════ -->
-<section class="section" id="next">
-  <div class="container">
-    <p class="label">Recommendations</p>
-    <h2 class="headline-l mt-8">Что прототипировать первым</h2>
-
-    <div class="steps-grid">
-      <div class="step-card">
-        <span class="priority p0">P0 — First</span>
-        <h4>Entry Points</h4>
-        <p>Три карточки: Capsule / Guided / Full Pipeline + Recent episodes. Первый экран после входа в Editor.</p>
-      </div>
-      <div class="step-card">
-        <span class="priority p0">P0 — First</span>
-        <h4>Character Setup</h4>
-        <p>RPG-style editor, Character Library, Consistency Score, Episode History. Ядро serial content.</p>
-      </div>
-      <div class="step-card">
-        <span class="priority p0">P0 — First</span>
-        <h4>Scene Composition</h4>
-        <p>Storyboard grid с @ mentions, shot cards, «Approve &amp; Generate». Storyboard preview ДО генерации.</p>
-      </div>
-      <div class="step-card">
-        <span class="priority p0">P0 — First</span>
-        <h4>Pipeline Monitor</h4>
-        <p>Persistent bottom bar с progress. Простой компонент, высокий impact на ощущение «бесшовности».</p>
-      </div>
-      <div class="step-card">
-        <span class="priority p1">P1 — Second</span>
-        <h4>Generation Stage</h4>
-        <p>Variant grid (4 варианта), per-shot approve/regenerate, model selector.</p>
-      </div>
-      <div class="step-card">
-        <span class="priority p1">P1 — Second</span>
-        <h4>Guided/Full Control</h4>
-        <p>Переключение visibility параметров. Один layout, два режима.</p>
-      </div>
-      <div class="step-card">
-        <span class="priority p1">P1 — Second</span>
-        <h4>Publishing Console: Library</h4>
-        <p>Grid/list/calendar views, title cards с inline-метриками, «Send to Library» flow.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ═══════════════════════════════════════════
      FOOTER
