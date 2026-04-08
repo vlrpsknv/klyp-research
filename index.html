@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klyp — Competitive Research</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════ */
+:root {
+  --bg: #07070B;
+  --bg-1: #0C0C12;
+  --bg-2: #111118;
+  --bg-3: #18181F;
+  --bg-4: #1F1F28;
+  --bg-5: #282832;
+  --border: rgba(255,255,255,.06);
+  --border-h: rgba(255,255,255,.12);
+  --ink: #F2F2F5;
+  --ink-2: #B0B0BA;
+  --ink-3: #72728A;
+  --ink-4: #4A4A5A;
+  --gold: #FDD59A;
+  --gold-dim: rgba(253,213,154,.08);
+  --gold-mid: rgba(253,213,154,.15);
+  --gold-strong: rgba(253,213,154,.25);
+  --green: #4ADE80;
+  --green-dim: rgba(74,222,128,.08);
+  --green-soft: rgba(74,222,128,.15);
+  --red: #F87171;
+  --red-dim: rgba(248,113,113,.08);
+  --red-soft: rgba(248,113,113,.15);
+  --blue: #60A5FA;
+  --blue-dim: rgba(96,165,250,.08);
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --max-w: 1200px;
+  --section-py: clamp(80px, 10vh, 140px);
+}
+
+/* ═══════════════════════════════════════════
+   RESET
+   ═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink-2);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+::selection { background: var(--gold); color: var(--bg); }
+img { max-width: 100%; display: block; }
+a { color: var(--gold); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ═══════════════════════════════════════════
+   NAV
+   ═══════════════════════════════════════════ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(7,7,11,.8);
+  backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--border);
+  transition: transform .3s;
+}
+.nav-inner {
+  max-width: var(--max-w); margin: 0 auto;
+  padding: 0 32px; height: 56px;
+  display: flex; align-items: center; gap: 6px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-brand {
+  font-weight: 800; font-size: .9rem; color: var(--gold);
+  letter-spacing: .03em; margin-right: 20px; flex-shrink: 0;
+}
+.nav-link {
+  font-size: .72rem; font-weight: 500; color: var(--ink-3);
+  padding: 6px 12px; border-radius: 8px; transition: all .15s;
+  white-space: nowrap; flex-shrink: 0; text-decoration: none;
+}
+.nav-link:hover { color: var(--ink); background: var(--bg-3); text-decoration: none; }
+.nav-divider { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; margin: 0 4px; }
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════ */
+.section {
+  padding: var(--section-py) 32px;
+  position: relative;
+}
+.section + .section { border-top: 1px solid var(--border); }
+.container { max-width: var(--max-w); margin: 0 auto; }
+
+/* ═══════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════ */
+.headline-xl {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800; color: var(--ink); line-height: 1.1;
+  letter-spacing: -.03em;
+}
+.headline-l {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 700; color: var(--ink); line-height: 1.2;
+  letter-spacing: -.02em;
+}
+.headline-m {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 600; color: var(--ink); line-height: 1.3;
+}
+.headline-s {
+  font-size: .85rem; font-weight: 600; color: var(--ink);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.label {
+  font-size: .7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--gold);
+}
+.body-l { font-size: 1.1rem; line-height: 1.75; color: var(--ink-2); }
+.body-m { font-size: .95rem; line-height: 1.7; }
+.body-s { font-size: .82rem; line-height: 1.65; color: var(--ink-3); }
+.gold { color: var(--gold); }
+
+/* ═══════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding-top: 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(ellipse, rgba(253,213,154,.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-stats {
+  display: flex; gap: 48px; margin-top: 48px; flex-wrap: wrap;
+}
+.hero-stat-num {
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 800; color: var(--gold); line-height: 1;
+}
+.hero-stat-label {
+  font-size: .78rem; color: var(--ink-3); margin-top: 4px;
+}
+.hero-sub {
+  max-width: 640px; margin-top: 32px;
+  font-size: 1.15rem; line-height: 1.7; color: var(--ink-2);
+}
+
+/* ═══════════════════════════════════════════
+   SUMMARY CARDS
+   ═══════════════════════════════════════════ */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.summary-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  transition: border-color .2s, transform .2s;
+}
+.summary-card:hover {
+  border-color: var(--border-h);
+  transform: translateY(-2px);
+}
+.summary-card .num {
+  font-size: 2rem; font-weight: 800; color: var(--gold); line-height: 1;
+}
+.summary-card h3 {
+  font-size: 1rem; font-weight: 600; color: var(--ink); margin-top: 12px;
+}
+.summary-card p { font-size: .88rem; color: var(--ink-3); margin-top: 8px; }
+
+/* ═══════════════════════════════════════════
+   LANDSCAPE
+   ═══════════════════════════════════════════ */
+.landscape-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px; margin-top: 40px;
+}
+.landscape-col {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+}
+.landscape-col h4 {
+  font-size: .72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: var(--gold); margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.landscape-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0;
+  font-size: .85rem; color: var(--ink-2);
+}
+.landscape-item .score {
+  font-size: .68rem; font-weight: 700;
+  background: var(--gold-dim); color: var(--gold);
+  padding: 2px 8px; border-radius: 6px;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .landscape-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .landscape-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   PLATFORM CARDS
+   ═══════════════════════════════════════════ */
+.platform-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-top: 32px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.platform-card:hover { border-color: var(--border-h); }
+.platform-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 32px 32px 0;
+}
+.platform-name {
+  font-size: 1.5rem; font-weight: 700; color: var(--ink);
+}
+.platform-url { font-size: .78rem; color: var(--ink-4); margin-top: 2px; }
+.platform-desc {
+  font-size: .92rem; color: var(--ink-2); margin-top: 8px;
+  max-width: 700px;
+}
+.score-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--gold-dim); border: 1px solid var(--gold-mid);
+  padding: 6px 14px; border-radius: 10px;
+  font-weight: 700; color: var(--gold); font-size: .9rem;
+  flex-shrink: 0;
+}
+.score-badge.high { background: var(--green-dim); border-color: var(--green-soft); color: var(--green); }
+.score-badge.medium { background: var(--gold-dim); border-color: var(--gold-mid); color: var(--gold); }
+.score-badge.low { background: var(--red-dim); border-color: var(--red-soft); color: var(--red); }
+
+.platform-key-pattern {
+  margin: 20px 32px 0;
+  padding: 16px 20px;
+  background: var(--gold-dim);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 10px 10px 0;
+  font-size: .88rem; color: var(--ink);
+}
+.platform-key-pattern strong { color: var(--gold); }
+
+.platform-screenshots {
+  padding: 24px 32px;
+  display: flex; gap: 12px;
+  overflow-x: auto; scrollbar-width: thin;
+  scrollbar-color: var(--bg-4) transparent;
+}
+.platform-screenshots::-webkit-scrollbar { height: 6px; }
+.platform-screenshots::-webkit-scrollbar-thumb { background: var(--bg-4); border-radius: 3px; }
+.platform-screenshots img {
+  height: 200px; width: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform .2s, border-color .2s;
+}
+.platform-screenshots img:hover {
+  transform: scale(1.02);
+  border-color: var(--gold-mid);
+}
+
+.platform-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border-top: 1px solid var(--border);
+}
+.platform-col {
+  background: var(--bg-1);
+  padding: 24px 28px;
+}
+.platform-col h4 {
+  font-size: .7rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 12px;
+}
+.platform-col h4.green-label { color: var(--green); }
+.platform-col h4.red-label { color: var(--red); }
+.platform-col h4.gold-label { color: var(--gold); }
+.platform-col ul { list-style: none; }
+.platform-col li {
+  font-size: .82rem; color: var(--ink-2);
+  padding: 4px 0; padding-left: 16px;
+  position: relative; line-height: 1.5;
+}
+.platform-col li::before {
+  content: '';
+  position: absolute; left: 0; top: 10px;
+  width: 6px; height: 6px; border-radius: 50%;
+}
+.platform-col.pros li::before { background: var(--green); }
+.platform-col.cons li::before { background: var(--red); }
+.platform-col.take li::before { background: var(--gold); }
+
+@media (max-width: 800px) {
+  .platform-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════
+   COMPARISON MATRIX
+   ═══════════════════════════════════════════ */
+.matrix-wrapper {
+  overflow-x: auto; margin-top: 32px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+.matrix {
+  width: 100%; border-collapse: collapse;
+  font-size: .72rem;
+}
+.matrix th, .matrix td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.matrix thead th {
+  background: var(--bg-2);
+  font-weight: 600; color: var(--ink-3);
+  text-transform: uppercase; letter-spacing: .06em;
+  font-size: .65rem;
+  position: sticky; top: 0;
+}
+.matrix thead th:last-child {
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+.matrix tbody td { color: var(--ink-2); }
+.matrix tbody td:first-child { font-weight: 600; color: var(--ink); white-space: normal; min-width: 120px; }
+.matrix tbody td:last-child {
+  color: var(--gold); font-weight: 500;
+  background: var(--gold-dim);
+}
+.matrix tbody tr:hover td { background: var(--bg-3); }
+.matrix tbody tr:hover td:last-child { background: var(--gold-mid); }
+.has-check { color: var(--green) !important; }
+.has-cross { color: var(--red) !important; }
+
+/* ═══════════════════════════════════════════
+   PATTERNS / ANTI-PATTERNS
+   ═══════════════════════════════════════════ */
+.pattern-list { margin-top: 32px; }
+.pattern-item {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 32px;
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 20px;
+  transition: border-color .2s;
+}
+.pattern-item:hover { border-color: var(--border-h); }
+.pattern-num {
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 12px;
+  font-weight: 800; font-size: 1.1rem;
+}
+.pattern-item.good .pattern-num { background: var(--green-dim); color: var(--green); }
+.pattern-item.bad .pattern-num { background: var(--red-dim); color: var(--red); }
+.pattern-title { font-size: 1rem; font-weight: 600; color: var(--ink); }
+.pattern-source { font-size: .75rem; color: var(--ink-4); margin-top: 2px; }
+.pattern-desc { font-size: .85rem; color: var(--ink-2); margin-top: 8px; line-height: 1.6; }
+.pattern-action {
+  margin-top: 10px; padding: 10px 16px;
+  background: var(--bg-3); border-radius: 8px;
+  font-size: .8rem; color: var(--ink-3);
+}
+.pattern-action strong { color: var(--ink); }
+
+/* ═══════════════════════════════════════════
+   DIFFERENTIATORS
+   ═══════════════════════════════════════════ */
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px; margin-top: 32px;
+}
+.diff-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, transform .2s;
+}
+.diff-card:hover {
+  border-color: var(--gold-mid);
+  transform: translateY(-2px);
+}
+.diff-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+.diff-card .num {
+  font-size: .7rem; font-weight: 700; color: var(--gold);
+  text-transform: uppercase; letter-spacing: .08em;
+}
+.diff-card h4 { font-size: 1rem; font-weight: 600; color: var(--ink); margin-top: 8px; }
+.diff-card p { font-size: .82rem; color: var(--ink-3); margin-top: 8px; line-height: 1.6; }
+
+/* ═══════════════════════════════════════════
+   THREATS
+   ═══════════════════════════════════════════ */
+.threat-card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px; align-items: center;
+}
+.threat-level {
+  padding: 4px 12px; border-radius: 8px;
+  font-size: .7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.threat-level.high { background: var(--red-dim); color: var(--red); }
+.threat-level.medium { background: var(--gold-dim); color: var(--gold); }
+.threat-name { font-weight: 600; color: var(--ink); }
+.threat-desc { font-size: .82rem; color: var(--ink-3); margin-top: 2px; }
+.threat-action { font-size: .78rem; color: var(--ink-3); text-align: right; }
+
+/* ═══════════════════════════════════════════
+   BLUEPRINT
+   ═══════════════════════════════════════════ */
+.blueprint-box {
+  background: var(--bg-2);
+  border: 1px solid var(--gold-mid);
+  border-radius: 16px;
+  padding: 32px;
+  margin-top: 32px;
+  font-family: var(--mono);
+  font-size: .75rem;
+  line-height: 1.8;
+  color: var(--ink-3);
+  overflow-x: auto;
+  white-space: pre;
+}
+.blueprint-box .hl { color: var(--gold); }
+.blueprint-box .g { color: var(--green); }
+.blueprint-box .dim { color: var(--ink-4); }
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px; margin-top: 32px;
+}
+.principle {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 20px 24px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.principle-num {
+  font-weight: 800; color: var(--gold);
+  font-size: 1.1rem; flex-shrink: 0;
+  width: 28px;
+}
+.principle h5 { font-size: .88rem; font-weight: 600; color: var(--ink); }
+.principle p { font-size: .78rem; color: var(--ink-3); margin-top: 4px; }
+
+/* ═══════════════════════════════════════════
+   NEXT STEPS
+   ═══════════════════════════════════════════ */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px; margin-top: 32px;
+}
+.step-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+}
+.step-card .priority {
+  font-size: .65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em;
+  padding: 3px 10px; border-radius: 6px;
+  display: inline-block;
+}
+.step-card .priority.p0 { background: var(--gold-dim); color: var(--gold); }
+.step-card .priority.p1 { background: var(--blue-dim); color: var(--blue); }
+.step-card h4 { font-size: .92rem; font-weight: 600; color: var(--ink); margin-top: 10px; }
+.step-card p { font-size: .8rem; color: var(--ink-3); margin-top: 6px; }
+
+/* ═══════════════════════════════════════════
+   LIGHTBOX
+   ═══════════════════════════════════════════ */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,.92);
+  backdrop-filter: blur(20px);
+  display: none; align-items: center; justify-content: center;
+  cursor: zoom-out;
+}
+.lightbox.active { display: flex; }
+.lightbox img {
+  max-width: 92vw; max-height: 92vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+.footer {
+  padding: 40px 32px;
+  text-align: center;
+  color: var(--ink-4);
+  font-size: .78rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ═══════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════ */
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }
+.mt-48 { margin-top: 48px; }
+.gap-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.tag {
+  font-size: .68rem; font-weight: 500;
+  padding: 3px 10px; border-radius: 6px;
+  background: var(--bg-3); color: var(--ink-3);
+}
+.divider {
+  height: 1px; background: var(--border);
+  margin: 48px 0;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAV
+     ═══════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-brand">KLYP RESEARCH</span>
+    <a href="#summary" class="nav-link">Summary</a>
+    <a href="#landscape" class="nav-link">Landscape</a>
+    <a href="#platforms" class="nav-link">Platforms</a>
+    <a href="#matrix" class="nav-link">Matrix</a>
+    <span class="nav-divider"></span>
+    <a href="#patterns" class="nav-link">Patterns</a>
+    <a href="#antipatterns" class="nav-link">Anti-patterns</a>
+    <a href="#differentiators" class="nav-link">Differentiators</a>
+    <span class="nav-divider"></span>
+    <a href="#threats" class="nav-link">Threats</a>
+    <a href="#blueprint" class="nav-link">Blueprint</a>
+    <a href="#next" class="nav-link">Next Steps</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════ -->
+<section class="hero section" id="hero">
+  <div class="container">
+    <p class="label">Competitive Research &bull; April 2026</p>
+    <h1 class="headline-xl mt-8">
+      Ни один конкурент не объединяет<br>
+      <span class="gold">AI creation + serial content + publishing</span>
+    </h1>
+    <p class="hero-sub">
+      Полный аудит рынка AI video creation. 4 research-потока параллельно, детальный UX-анализ каждой платформы с поэкранным разбором.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">60+</div>
+        <div class="hero-stat-label">платформ проанализировано</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">13</div>
+        <div class="hero-stat-label">детальных UX-разборов</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">75</div>
+        <div class="hero-stat-label">скриншотов editor UI</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-label">research-потока</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     EXECUTIVE SUMMARY
+     ═══════════════════════════════════════════ -->
+<section class="section" id="summary">
+  <div class="container">
+    <p class="label">Executive Summary</p>
+    <h2 class="headline-l mt-8">Три главных вывода</h2>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="num">01</div>
+        <h3>Pipeline уже не уникален</h3>
+        <p>Runway Workflows, Krea Nodes, Adobe Capsules — все запустили node-based pipelines в 2025. Уникальность Klyp = <strong style="color:var(--gold)">serial content + creator economy</strong> поверх pipeline.</p>
+      </div>
+      <div class="summary-card">
+        <div class="num">02</div>
+        <h3>Character consistency — нерешённая проблема</h3>
+        <p>Только LTX Studio имеет entity-level characters. Но без cross-episode tracking. Klyp добавляет <strong style="color:var(--gold)">Episode History</strong> — consistency растёт автоматически.</p>
+      </div>
+      <div class="summary-card">
+        <div class="num">03</div>
+        <h3>Creation-to-Publishing разрыв</h3>
+        <p>Все 13 конкурентов заканчивают на «скачай файл». Klyp доводит до <strong style="color:var(--gold)">публикации в TikTok/Instagram за один клик</strong>, включая аналитику и монетизацию.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     LANDSCAPE
+     ═══════════════════════════════════════════ -->
+<section class="section" id="landscape">
+  <div class="container">
+    <p class="label">Market Landscape</p>
+    <h2 class="headline-l mt-8">Кто где на рынке</h2>
+    <p class="body-m mt-8">60+ платформ в четырёх категориях. Ни одна не закрывает всё.</p>
+
+    <div class="landscape-grid">
+      <div class="landscape-col">
+        <h4>AI Video Tools</h4>
+        <div class="landscape-item">Runway ML <span class="score">8/10</span></div>
+        <div class="landscape-item">Kling AI <span class="score">7/10</span></div>
+        <div class="landscape-item">Pika <span class="score">6/10</span></div>
+        <div class="landscape-item">Luma AI <span class="score">7/10</span></div>
+        <div class="landscape-item">Vidu <span class="score">6/10</span></div>
+        <div class="landscape-item">Krea <span class="score">8/10</span></div>
+        <div class="landscape-item">Higgsfield <span class="score">7/10</span></div>
+      </div>
+      <div class="landscape-col">
+        <h4>Production Platforms</h4>
+        <div class="landscape-item">LTX Studio <span class="score">10/10</span></div>
+        <div class="landscape-item">HeyGen <span class="score">9/10</span></div>
+        <div class="landscape-item">Synthesia <span class="score">7/10</span></div>
+        <div class="landscape-item">InVideo AI <span class="score">8/10</span></div>
+        <div class="landscape-item">Descript <span class="score">4/10</span></div>
+        <div class="landscape-item">CapCut <span class="score">5/10</span></div>
+      </div>
+      <div class="landscape-col">
+        <h4>Serial Content</h4>
+        <div class="landscape-item">StoReel Canvas <span class="score">9/10</span></div>
+        <div class="landscape-item">Vigloo Studio <span class="score">8/10</span></div>
+        <div class="landscape-item">Holywater <span class="score">7/10</span></div>
+        <div class="landscape-item">Genra AI <span class="score">6/10</span></div>
+        <div class="landscape-item">SkyReels <span class="score">5/10</span></div>
+      </div>
+      <div class="landscape-col">
+        <h4>Creator Studios</h4>
+        <div class="landscape-item">YouTube Studio <span class="score">9/10</span></div>
+        <div class="landscape-item">Google Play <span class="score">8/10</span></div>
+        <div class="landscape-item">TikTok Studio <span class="score">7/10</span></div>
+        <div class="landscape-item">OnlyFans <span class="score">7/10</span></div>
+        <div class="landscape-item">Patreon <span class="score">7/10</span></div>
+        <div class="landscape-item">Substack <span class="score">7/10</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PLATFORMS — DETAILED
+     ═══════════════════════════════════════════ -->
+<section class="section" id="platforms">
+  <div class="container">
+    <p class="label">Platform Profiles</p>
+    <h2 class="headline-l mt-8">13 платформ — поэкранный разбор</h2>
+    <p class="body-m mt-8">Каждая платформа: ключевой паттерн, скриншоты, плюсы/минусы, что берём для Klyp.</p>
+
+    <!-- LTX Studio -->
+    <div class="platform-card" id="ltx">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">LTX Studio</div>
+          <div class="platform-url">ltx.studio</div>
+          <div class="platform-desc">Единственная платформа с production pipeline + entity-based character management. Script → Storyboard → Multi-model video → Audio → Export.</div>
+        </div>
+        <div class="score-badge high">10/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Entity-based prompting — CHARACTER / OBJECT / LOCATION как именованные entities с thumbnails. @ mentions в shot descriptions для consistency между сценами.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/ltx-01.jpg" alt="LTX Studio" onclick="openLightbox(this)">
+        <img src="screenshots/ltx-02.jpg" alt="LTX Studio" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Единственный настоящий production pipeline</li>
+            <li>Entity-based characters с @ mentions</li>
+            <li>Storyboard rows (Scene → Shots)</li>
+            <li>Wizard для пошагового создания</li>
+            <li>Per-shot actions: Edit Image / Generate Video</li>
+            <li>Style и Cast на уровне проекта</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>4 режима ощущаются как «разные приложения»</li>
+            <li>Нет Publishing Console, analytics, monetization</li>
+            <li>Нет cross-episode character tracking</li>
+            <li>Geo-block для некоторых регионов</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Entity-based character management</li>
+            <li>@ mentions в shot descriptions</li>
+            <li>Storyboard rows (Scene → Shots)</li>
+            <li>Per-shot dual actions (Edit / Generate)</li>
+            <li>Style и Cast как project-level settings</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- HeyGen -->
+    <div class="platform-card" id="heygen">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">HeyGen</div>
+          <div class="platform-url">heygen.com</div>
+          <div class="platform-desc">Avatar-centric платформа с тремя уровнями автоматизации: Video Agent → Script to Video → AI Studio. Лучшая модель information architecture.</div>
+        </div>
+        <div class="score-badge high">9/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Три уровня автоматизации как отдельные entry points. Пользователь сам выбирает глубину контроля — не toggle, не dropdown, а три карточки с описаниями.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/heygen-editor.jpg" alt="HeyGen Editor" onclick="openLightbox(this)">
+        <img src="screenshots/heygen-avatar-gallery.jpg" alt="HeyGen Avatars" onclick="openLightbox(this)">
+        <img src="screenshots/heygen-captions.jpg" alt="HeyGen Captions" onclick="openLightbox(this)">
+        <img src="screenshots/heygen-layers.jpg" alt="HeyGen Layers" onclick="openLightbox(this)">
+        <img src="screenshots/heygen-music.jpg" alt="HeyGen Music" onclick="openLightbox(this)">
+        <img src="screenshots/heygen-avatar-picker.jpg" alt="HeyGen Avatar Picker" onclick="openLightbox(this)">
+        <img src="screenshots/heygen-editor-initial.jpg" alt="HeyGen Editor Initial" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>3 уровня автоматизации — идеальная модель</li>
+            <li>L1/L2 sidebar навигация масштабируется</li>
+            <li>Avatar ecosystem — Characters как first-class entity</li>
+            <li>Brand System — аналог Series Style Guide</li>
+            <li>Персонализированный Home — «Hey [Name]»</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Карточки не показывают visual preview</li>
+            <li>Нет индикации текущего проекта/серии</li>
+            <li>Ориентирован на corporate (talking heads)</li>
+            <li>Нет pipeline visualization</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>3 уровня: Capsule / Guided / Full Pipeline</li>
+            <li>L1/L2 sidebar для Publishing Console</li>
+            <li>Character ecosystem (Library, Shots, Templates)</li>
+            <li>Персонализированный Home с recent projects</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Runway -->
+    <div class="platform-card" id="runway">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Runway ML</div>
+          <div class="platform-url">runwayml.com</div>
+          <div class="platform-desc">Флагман AI video creation с pipeline-first архитектурой. Node-based Workflows, Multi-Shot Video, persistent Characters.</div>
+        </div>
+        <div class="score-badge medium">8/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Auto/Custom toggle — один переключатель трансформирует весь интерфейс. Auto = «AI разобьёт на шоты», Custom = ручное управление.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/runway-multishot-editor.jpg" alt="Runway Multi-Shot" onclick="openLightbox(this)">
+        <img src="screenshots/runway-workflows-page.jpg" alt="Runway Workflows" onclick="openLightbox(this)">
+        <img src="screenshots/runway-characters.jpg" alt="Runway Characters" onclick="openLightbox(this)">
+        <img src="screenshots/runway-build-workflow.jpg" alt="Runway Build" onclick="openLightbox(this)">
+        <img src="screenshots/runway-story-panels.jpg" alt="Runway Story" onclick="openLightbox(this)">
+        <img src="screenshots/runway-new-workflow.jpg" alt="Runway New Workflow" onclick="openLightbox(this)">
+        <img src="screenshots/runway-current.jpg" alt="Runway Current" onclick="openLightbox(this)">
+        <img src="screenshots/runway-workflows-list.jpg" alt="Runway Workflows List" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Auto/Custom toggle — элегантное beginner/pro</li>
+            <li>Story-first подход — нарративное мышление</li>
+            <li>Node-based Workflows — мощная визуализация</li>
+            <li>Card-based ноды дружелюбнее ComfyUI</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Фрагментация: 3 разных UI без связи</li>
+            <li>Workflows слишком developer-facing</li>
+            <li>Нет session/project иерархии</li>
+            <li>Безлейбельные connection ports</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Auto/Custom → Guided/Full Control</li>
+            <li>Story-first вход с AI-декомпозицией</li>
+            <li>Card-based stage visualization</li>
+            <li>Multi-model selection с прозрачностью</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kling -->
+    <div class="platform-card" id="kling">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Kling AI</div>
+          <div class="platform-url">klingai.com</div>
+          <div class="platform-desc">Motion Library и visual presets вместо текстовых промптов. RPG-подход к параметрам генерации.</div>
+        </div>
+        <div class="score-badge medium">7/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Motion Library — визуальная библиотека пресетов движений. Выбираешь движение визуально (Ghost Step Dance, Martial Art), а не пишешь промпт. RPG-подход.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/kling-motion-library-grid.jpg" alt="Kling Motion Library" onclick="openLightbox(this)">
+        <img src="screenshots/kling-image-gen-editor.jpg" alt="Kling Image Gen" onclick="openLightbox(this)">
+        <img src="screenshots/kling-video-gen-editor.jpg" alt="Kling Video Gen" onclick="openLightbox(this)">
+        <img src="screenshots/kling-motion-control-editor.jpg" alt="Kling Motion Control" onclick="openLightbox(this)">
+        <img src="screenshots/kling-styles-picker.jpg" alt="Kling Styles" onclick="openLightbox(this)">
+        <img src="screenshots/kling-image-styles.jpg" alt="Kling Image Styles" onclick="openLightbox(this)">
+        <img src="screenshots/kling-avatar-tab.jpg" alt="Kling Avatar" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Motion Library — революционное снижение порога входа</li>
+            <li>DeepSeek reverse-prompting</li>
+            <li>Multi-reference (10 слотов) для consistency</li>
+            <li>Compact parameter bar одной строкой</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Tab-based фрагментация без связи</li>
+            <li>Зелёный неоновый акцент — «казиношная» эстетика</li>
+            <li>«Subscribe!» в рабочей зоне</li>
+            <li>Пустые empty states без guidance</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Motion/Style Library как visual presets</li>
+            <li>Reverse-prompting из reference image</li>
+            <li>Compact parameter bar</li>
+            <li>Разделение «КТО» и «КАК»</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Krea -->
+    <div class="platform-card" id="krea">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Krea</div>
+          <div class="platform-url">krea.ai</div>
+          <div class="platform-desc">Node Editor как first-class feature. Визуализирует бесшовный pipeline между AI-сервисами — самый релевантный референс для Klyp pro-mode.</div>
+        </div>
+        <div class="score-badge medium">8/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Node-based workflow — визуальное программирование AI pipeline. Каждый узел подписан моделью (NANO BANANA, FLUX, SORA 2). «Reusable, scalable, sharable workflows» = 1:1 семантика с Klyp Capsules.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/krea-node-editor-page.jpg" alt="Krea Node Editor" onclick="openLightbox(this)">
+        <img src="screenshots/krea-home-dashboard.jpg" alt="Krea Home" onclick="openLightbox(this)">
+        <img src="screenshots/krea-image-gen-page.jpg" alt="Krea Image Gen" onclick="openLightbox(this)">
+        <img src="screenshots/krea-video-page.jpg" alt="Krea Video" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Node Editor — САМЫЙ релевантный референс</li>
+            <li>Model labels на узлах — прозрачность</li>
+            <li>Reusable workflows = Capsules</li>
+            <li>LoRA training для character consistency</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Node Editor и Home не связаны</li>
+            <li>LoRA — слишком техничен для casual creators</li>
+            <li>Нет serial content, нет project management</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>DAG-граф pipeline для Pro mode</li>
+            <li>Model labels на каждом stage</li>
+            <li>Reusable workflows → Capsules/Recipes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- InVideo AI -->
+    <div class="platform-card" id="invideo">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">InVideo AI</div>
+          <div class="platform-url">invideo.io</div>
+          <div class="platform-desc">Лучший dual beginner/pro: prompt-to-video (beginner) vs manual scene editor (pro). Два полноценных flow в одном продукте.</div>
+        </div>
+        <div class="score-badge medium">8/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Dual mode — единственный промпт → полное видео (beginner) vs ручное редактирование сцен (pro). Не toggle, а два разных flow с общей библиотекой.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/invideo-copilot-main.jpg" alt="InVideo Copilot" onclick="openLightbox(this)">
+        <img src="screenshots/invideo-copilot-initial.jpg" alt="InVideo Initial" onclick="openLightbox(this)">
+        <img src="screenshots/invideo-context-tab.jpg" alt="InVideo Context" onclick="openLightbox(this)">
+        <img src="screenshots/invideo-notebook-tab.jpg" alt="InVideo Notebook" onclick="openLightbox(this)">
+        <img src="screenshots/invideo-after-video-click.jpg" alt="InVideo After Video" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Dual beginner/pro — два полноценных flow</li>
+            <li>Prompt-to-video для quick start</li>
+            <li>Scene editor для детального контроля</li>
+            <li>Workspace с project management</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Нет character persistence</li>
+            <li>Нет serial content features</li>
+            <li>Generic UI без distinctive personality</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Dual beginner/pro как два flow</li>
+            <li>Workspace с project cards</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Luma -->
+    <div class="platform-card" id="luma">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Luma AI</div>
+          <div class="platform-url">lumalabs.ai</div>
+          <div class="platform-desc">Наиболее структурированная навигация из всех AI video платформ. Chip-селекторы для параметров, visual style grid.</div>
+        </div>
+        <div class="score-badge medium">7/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Лучшая навигационная модель — text sidebar с группировкой Create / Library / Account. Масштабируется, discoverable, знакомый SaaS-паттерн.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/luma-text-to-video.jpg" alt="Luma Text to Video" onclick="openLightbox(this)">
+        <img src="screenshots/luma-styles.jpg" alt="Luma Styles" onclick="openLightbox(this)">
+        <img src="screenshots/luma-effects.jpg" alt="Luma Effects" onclick="openLightbox(this)">
+        <img src="screenshots/luma-photo-to-video.jpg" alt="Luma Photo to Video" onclick="openLightbox(this)">
+        <img src="screenshots/luma-frames.jpg" alt="Luma Frames" onclick="openLightbox(this)">
+        <img src="screenshots/luma-elements.jpg" alt="Luma Elements" onclick="openLightbox(this)">
+        <img src="screenshots/luma-lip-sync.jpg" alt="Luma Lip Sync" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Лучшая навигация (text sidebar)</li>
+            <li>Chip-селекторы — компактно и элегантно</li>
+            <li>Visual style grid с реальными превью</li>
+            <li>«Generate N» CTA с количеством</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Prompt-first подход</li>
+            <li>Одинаковый layout для ВСЕХ режимов</li>
+            <li>Нет project/episode контекста</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Sidebar навигация как структурный якорь</li>
+            <li>Chip-селекторы для параметров</li>
+            <li>Visual style grid с крупными превью</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Synthesia -->
+    <div class="platform-card" id="synthesia">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Synthesia</div>
+          <div class="platform-url">synthesia.io</div>
+          <div class="platform-desc">Эталон scene-based подхода. AI Video Assistant показывает storyboard preview ДО генерации. Корпоративный фокус.</div>
+        </div>
+        <div class="score-badge medium">7/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Storyboard preview ДО генерации. «Recreate outline» дешевле «Regenerate video». Итеративность до запуска дорогой генерации.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/synthesia-templates.jpg" alt="Synthesia Templates" onclick="openLightbox(this)">
+        <img src="screenshots/synthesia-editor-from-template.jpg" alt="Synthesia Editor" onclick="openLightbox(this)">
+        <img src="screenshots/synthesia-template-detail.jpg" alt="Synthesia Template Detail" onclick="openLightbox(this)">
+        <img src="screenshots/synthesia-templates-page.jpg" alt="Synthesia Templates Page" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Storyboard preview до генерации — критично</li>
+            <li>Multi-source input (File/URL/Prompt/Script)</li>
+            <li>Parameter chips (Objective, Language, Tone)</li>
+            <li>Dual CTA: Continue editing / Generate</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Корпоративная ориентация, не entertainment</li>
+            <li>Light theme — не Klyp aesthetic</li>
+            <li>Brand Kits behind paywall</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Storyboard preview до генерации</li>
+            <li>Multi-source input</li>
+            <li>«Save as template» из workflow</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pika -->
+    <div class="platform-card" id="pika">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Pika</div>
+          <div class="platform-url">pika.art</div>
+          <div class="platform-desc">Prompt-bar-centric генератор с модульными режимами. Максимальный минимализм — ставка на «магию одного промпта».</div>
+        </div>
+        <div class="score-badge low">6/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Pikascenes = ingredients-first. Загрузка фото-ингредиентов (персонажи + объекты + локация) ДО написания промпта. Ближайшая аналогия к философии Klyp.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/pika-pikascenes.jpg" alt="Pika Scenes" onclick="openLightbox(this)">
+        <img src="screenshots/pika-home.jpg" alt="Pika Home" onclick="openLightbox(this)">
+        <img src="screenshots/pika-pikaframes.jpg" alt="Pika Frames" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Ingredients-first — самый близкий к Klyp</li>
+            <li>Creative/Precise toggle</li>
+            <li>«Make it yours» remix-культура</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>80% экрана пустые</li>
+            <li>Prompt-bar-centric — катастрофа для serial content</li>
+            <li>Нет project management, flat Library</li>
+            <li>QR-промо поверх рабочей области</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Концепцию «ингредиенты → опиши сцену»</li>
+            <li>Разделение characters / objects / location</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vidu -->
+    <div class="platform-card" id="vidu">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Vidu</div>
+          <div class="platform-url">vidu.com</div>
+          <div class="platform-desc">Dashboard-ориентированный hub с позиционированием «Built for Storytelling». Templates как first-class entity.</div>
+        </div>
+        <div class="score-badge low">6/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Templates как first-class навигационный элемент — крупные визуальные карточки с pill-фильтрами по тематике. Единственная платформа, артикулирующая нарратив.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/vidu-create-hub.jpg" alt="Vidu Create" onclick="openLightbox(this)">
+        <img src="screenshots/vidu-templates.jpg" alt="Vidu Templates" onclick="openLightbox(this)">
+        <img src="screenshots/vidu-text2video.jpg" alt="Vidu Text to Video" onclick="openLightbox(this)">
+        <img src="screenshots/vidu-character2video.jpg" alt="Vidu Character" onclick="openLightbox(this)">
+        <img src="screenshots/vidu-short-films.jpg" alt="Vidu Short Films" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>«Built for Storytelling» позиционирование</li>
+            <li>Templates с крупными превью</li>
+            <li>«+ Publish» + social icons</li>
+            <li>Agent как AI-ассистент в навигации</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Icon-only sidebar — нечитаемые аббревиатуры</li>
+            <li>3 из 5 страниц 404</li>
+            <li>«40% OFF, Limited time» в рабочей зоне</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Templates как first-class entity</li>
+            <li>Жанровая фильтрация</li>
+            <li>«+ Publish» встроен в creation flow</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Descript -->
+    <div class="platform-card" id="descript">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">Descript</div>
+          <div class="platform-url">descript.com</div>
+          <div class="platform-desc">Transcript-first видеоредактор, перестроившийся на chat-driven модель. «What can I help you with?» по центру — ChatGPT-стиль.</div>
+        </div>
+        <div class="score-badge low">4/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> Chat-first entry = <strong style="color:var(--red)">АНТИПАТТЕРН</strong> для Klyp. Text-driven editing не работает для AI video generation с pipeline.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/descript-drive-main.jpg" alt="Descript Drive" onclick="openLightbox(this)">
+        <img src="screenshots/descript-new-project.jpg" alt="Descript New Project" onclick="openLightbox(this)">
+        <img src="screenshots/descript-scroll.jpg" alt="Descript Scroll" onclick="openLightbox(this)">
+        <img src="screenshots/descript-drive.jpg" alt="Descript Drive View" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>Template chips как быстрый старт</li>
+            <li>Brand Studio — аналог Series Style</li>
+            <li>Реферралка в header — видимый placement</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Chat-first = антипаттерн для Klyp</li>
+            <li>«Auto» mode — чёрный ящик</li>
+            <li>Zero pipeline visualization</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Template chips для quick-start</li>
+            <li>Реферралка в header</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CapCut -->
+    <div class="platform-card" id="capcut">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">CapCut</div>
+          <div class="platform-url">capcut.com</div>
+          <div class="platform-desc">Timeline-based видеоредактор с AI-фичами от ByteDance. Classic NLE layout (Canvas + Timeline), 13+ категорий ресурсов.</div>
+        </div>
+        <div class="score-badge low">5/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> L1/L2 dual-panel sidebar (icon + content panel) масштабируется. «Brainstorm with AI» — creative ideation stage. Подтверждение HeyGen паттерна.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/dreamina-canvas.jpg" alt="Dreamina Canvas" onclick="openLightbox(this)">
+        <img src="screenshots/dreamina-image-gen.jpg" alt="Dreamina Image Gen" onclick="openLightbox(this)">
+        <img src="screenshots/dreamina-video-gen.jpg" alt="Dreamina Video Gen" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>L1/L2 dual-panel sidebar масштабируется</li>
+            <li>Onboarding tooltip step-by-step</li>
+            <li>«Brainstorm with AI» для ideation</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>Timeline = антипаттерн для AI-native</li>
+            <li>13+ категорий = overload</li>
+            <li>«All-in-one» = feature soup</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Dual-panel sidebar (L1/L2)</li>
+            <li>«Brainstorm with AI» для ideation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- StoReel / Vigloo -->
+    <div class="platform-card" id="storeel">
+      <div class="platform-header">
+        <div>
+          <div class="platform-name">StoReel / Vigloo</div>
+          <div class="platform-url">storeel.com &bull; vigloo.com</div>
+          <div class="platform-desc">Прямые конкуренты в стриминге серийного контента. StoReel — $34M funding, Canvas (internal). Vigloo — первый creator dashboard в microdrama.</div>
+        </div>
+        <div class="score-badge medium">7/10</div>
+      </div>
+      <div class="platform-key-pattern">
+        <strong>Key Pattern:</strong> StoReel Canvas — полный production pipeline, но не self-serve. Vigloo — первый creator dashboard с Performance + Revenue + AI insights. Подтверждение product-market fit.
+      </div>
+      <div class="platform-screenshots">
+        <img src="screenshots/syntx-01-seedance-main.jpg" alt="Syntx Main" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-design-tab.jpg" alt="Syntx Design" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-audio-tab.jpg" alt="Syntx Audio" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-text-tab.jpg" alt="Syntx Text" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-seedance-video.jpg" alt="Syntx Seedance" onclick="openLightbox(this)">
+        <img src="screenshots/syntx-video-back.jpg" alt="Syntx Video Back" onclick="openLightbox(this)">
+      </div>
+      <div class="platform-grid">
+        <div class="platform-col pros">
+          <h4 class="green-label">Сильные стороны</h4>
+          <ul>
+            <li>StoReel: $34M, 100 AI dramas/мес цель</li>
+            <li>Vigloo: первый creator dashboard в microdrama</li>
+            <li>Оба понимают serial content как core</li>
+          </ul>
+        </div>
+        <div class="platform-col cons">
+          <h4 class="red-label">Слабые стороны</h4>
+          <ul>
+            <li>StoReel Canvas не self-serve — internal tool</li>
+            <li>Vigloo = analytics only, нет creation tools</li>
+            <li>Мало данных для UX-анализа</li>
+          </ul>
+        </div>
+        <div class="platform-col take">
+          <h4 class="gold-label">Что берём для Klyp</h4>
+          <ul>
+            <li>Vigloo: Performance + Revenue dashboard model</li>
+            <li>StoReel: подтверждение product-market fit</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     COMPARISON MATRIX
+     ═══════════════════════════════════════════ -->
+<section class="section" id="matrix">
+  <div class="container">
+    <p class="label">Comparison Matrix</p>
+    <h2 class="headline-l mt-8">Все vs Klyp</h2>
+    <p class="body-m mt-8">Ключевые UX-паттерны: кто что имеет. Последняя колонка — target Klyp.</p>
+
+    <div class="matrix-wrapper">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>UX-паттерн</th>
+            <th>Runway</th>
+            <th>Kling</th>
+            <th>LTX</th>
+            <th>HeyGen</th>
+            <th>Krea</th>
+            <th>InVideo</th>
+            <th>Synthesia</th>
+            <th>Pika</th>
+            <th>Luma</th>
+            <th>Klyp target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pipeline</td>
+            <td class="has-check">Nodes</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-check">4-mode</td>
+            <td>Hidden</td>
+            <td class="has-check">Nodes</td>
+            <td>Partial</td>
+            <td>Modal</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td>6-stage stepper + node view</td>
+          </tr>
+          <tr>
+            <td>Character Mgmt</td>
+            <td>Isolated</td>
+            <td>Multi-ref</td>
+            <td class="has-check">Entities + @</td>
+            <td class="has-check">Avatars</td>
+            <td>LoRA</td>
+            <td class="has-cross">Нет</td>
+            <td>Personal</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td>Profiles + Episode History + @</td>
+          </tr>
+          <tr>
+            <td>Beginner/Pro</td>
+            <td class="has-check">Auto/Custom</td>
+            <td>Presets</td>
+            <td>Wizard</td>
+            <td class="has-check">3 levels</td>
+            <td>Single</td>
+            <td class="has-check">Dual flow</td>
+            <td>2 CTAs</td>
+            <td>Toggle</td>
+            <td>Single</td>
+            <td>Capsule / Guided / Full</td>
+          </tr>
+          <tr>
+            <td>Serial Content</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td>Partial</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td>Episodes, Seasons, Templates</td>
+          </tr>
+          <tr>
+            <td>Publishing</td>
+            <td class="has-cross">Нет</td>
+            <td>Canvas</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td>Full console + social sharing</td>
+          </tr>
+          <tr>
+            <td>Analytics</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td>Views, audience, revenue</td>
+          </tr>
+          <tr>
+            <td>Social Sharing</td>
+            <td class="has-cross">Нет</td>
+            <td>Canvas</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td class="has-cross">Нет</td>
+            <td>TikTok / Instagram / YouTube</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     PATTERNS
+     ═══════════════════════════════════════════ -->
+<section class="section" id="patterns">
+  <div class="container">
+    <p class="label">Top 10 Patterns</p>
+    <h2 class="headline-l mt-8">Что работает — берём для Klyp</h2>
+
+    <div class="pattern-list">
+      <div class="pattern-item good">
+        <div class="pattern-num">1</div>
+        <div>
+          <div class="pattern-title">Три уровня автоматизации</div>
+          <div class="pattern-source">HeyGen — Video Agent / Script to Video / AI Studio</div>
+          <div class="pattern-desc">Решает главную UX-дилемму: «два уровня в одном интерфейсе». Три карточки с описаниями ЧТО и ДЛЯ КОГО.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> Capsule / Guided / Full Pipeline — три entry points на entry screen</div>
+        </div>
+      </div>
+      <div class="pattern-item good">
+        <div class="pattern-num">2</div>
+        <div>
+          <div class="pattern-title">Entity-based Characters + @ Mentions</div>
+          <div class="pattern-source">LTX Studio — CHARACTER / OBJECT / LOCATION entities</div>
+          <div class="pattern-desc">Serial content = character consistency через эпизоды. @ mentions в prompt — единственный масштабируемый подход.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> Character Profiles + Episode History + auto-подстановка при упоминании</div>
+        </div>
+      </div>
+      <div class="pattern-item good">
+        <div class="pattern-num">3</div>
+        <div>
+          <div class="pattern-title">Storyboard Preview до генерации</div>
+          <div class="pattern-source">Synthesia — AI Video Assistant</div>
+          <div class="pattern-desc">Генерация дорогая. Показать план ПЕРЕД execution = экономия + итеративность. «Recreate outline» бесплатен.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> Stage 2 показывает storyboard-grid с placeholder thumbnails до запуска pipeline</div>
+        </div>
+      </div>
+      <div class="pattern-item good">
+        <div class="pattern-num">4</div>
+        <div>
+          <div class="pattern-title">Motion/Style Library как Visual Presets</div>
+          <div class="pattern-source">Kling — Motion Library</div>
+          <div class="pattern-desc">Visual browsing > text prompting. RPG character editor: выбираешь визуально, не печатаешь. Радикально снижает порог входа.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> Visual presets на ВСЕХ stages: Character / Scene / Camera / Audio presets</div>
+        </div>
+      </div>
+      <div class="pattern-item good">
+        <div class="pattern-num">5</div>
+        <div>
+          <div class="pattern-title">Pipeline Monitor — Bottom Bar</div>
+          <div class="pattern-source">Уникально Klyp, вдохновлено Krea Nodes</div>
+          <div class="pattern-desc">Визуализация ключевого дифференциатора: файлы текут между AI-сервисами. Transparency = trust.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> Persistent bottom bar 40px с progress, имя модели, кликабельные этапы</div>
+        </div>
+      </div>
+      <div class="pattern-item good">
+        <div class="pattern-num">6</div>
+        <div>
+          <div class="pattern-title">Auto/Custom Toggle</div>
+          <div class="pattern-source">Runway Multi-Shot Video</div>
+          <div class="pattern-desc">Один переключатель трансформирует весь интерфейс: visibility параметров, не layout.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> [Guided ↔ Full Control] кнопка в top bar</div>
+        </div>
+      </div>
+      <div class="pattern-item good">
+        <div class="pattern-num">7</div>
+        <div>
+          <div class="pattern-title">L1/L2 Sidebar Navigation</div>
+          <div class="pattern-source">HeyGen + CapCut</div>
+          <div class="pattern-desc">Publishing Console имеет 5+ разделов. Flat sidebar не масштабируется. L1 icon + L2 text — proven SaaS pattern.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> L1: Library | Analytics | Editor | Earnings | Referral. L2: подразделы</div>
+        </div>
+      </div>
+      <div class="pattern-item good">
+        <div class="pattern-num">8</div>
+        <div>
+          <div class="pattern-title">Node-based Pipeline — Pro Mode</div>
+          <div class="pattern-source">Krea Nodes</div>
+          <div class="pattern-desc">Pro-users хотят видеть и контролировать pipeline. Node view = reusable workflows = Capsules/Recipes.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> Toggle «Pipeline View» в Full Control mode</div>
+        </div>
+      </div>
+      <div class="pattern-item good">
+        <div class="pattern-num">9</div>
+        <div>
+          <div class="pattern-title">Multi-Source Input</div>
+          <div class="pattern-source">Synthesia — File / URL / Prompt / Script</div>
+          <div class="pattern-desc">Креатор может начать с разного. «Continue Previous Episode» = serial content killer feature.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> Entry tabs: From Script / Prompt / Reference / Continue Previous Episode</div>
+        </div>
+      </div>
+      <div class="pattern-item good">
+        <div class="pattern-num">10</div>
+        <div>
+          <div class="pattern-title">Reverse-Prompting из Reference</div>
+          <div class="pattern-source">Kling — DeepSeek reverse-generate</div>
+          <div class="pattern-desc">Не все creators — prompt engineers. Загрузи reference → AI описывает → ты редактируешь → генерируй.</div>
+          <div class="pattern-action"><strong>Klyp:</strong> Auto-describe на Characters, Scenes, Refinement stages</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ANTI-PATTERNS
+     ═══════════════════════════════════════════ -->
+<section class="section" id="antipatterns">
+  <div class="container">
+    <p class="label">Top 10 Anti-Patterns</p>
+    <h2 class="headline-l mt-8">Что не работает — избегаем</h2>
+
+    <div class="pattern-list">
+      <div class="pattern-item bad">
+        <div class="pattern-num">1</div>
+        <div>
+          <div class="pattern-title">Chat-First Interface</div>
+          <div class="pattern-source">Descript</div>
+          <div class="pattern-desc">«What can I help you with?» + text input по центру. Zero visual feedback, no pipeline visibility. Для production serial content — катастрофа.</div>
+        </div>
+      </div>
+      <div class="pattern-item bad">
+        <div class="pattern-num">2</div>
+        <div>
+          <div class="pattern-title">Tab-Based Fragmentation</div>
+          <div class="pattern-source">Kling — Image / Video / Motion / Avatar</div>
+          <div class="pattern-desc">Изолированные вкладки = потеря контекста. Пользователь вручную: «сгенерил → скачал → загрузил в следующий tab».</div>
+        </div>
+      </div>
+      <div class="pattern-item bad">
+        <div class="pattern-num">3</div>
+        <div>
+          <div class="pattern-title">Пустые Empty States</div>
+          <div class="pattern-source">Kling Video, CapCut</div>
+          <div class="pattern-desc">50% экрана с «Release your creative potential» и ничего больше. Drop-off moment для новых пользователей.</div>
+        </div>
+      </div>
+      <div class="pattern-item bad">
+        <div class="pattern-num">4</div>
+        <div>
+          <div class="pattern-title">Promotional Noise в рабочей зоне</div>
+          <div class="pattern-source">Kling «Subscribe!», Vidu «40% OFF», Pika QR-модал</div>
+          <div class="pattern-desc">Creator tool ≠ e-commerce. Промо отвлекает от creative flow, создаёт anxiety.</div>
+        </div>
+      </div>
+      <div class="pattern-item bad">
+        <div class="pattern-num">5</div>
+        <div>
+          <div class="pattern-title">Icon-Only Navigation</div>
+          <div class="pattern-source">Vidu — «R2V», «I2V», «T2V»</div>
+          <div class="pattern-desc">Discoverability = 0. Даже опытный пользователь не поймёт аббревиатуры. Иконка + текст ВСЕГДА.</div>
+        </div>
+      </div>
+      <div class="pattern-item bad">
+        <div class="pattern-num">6</div>
+        <div>
+          <div class="pattern-title">«Auto» Mode без Visibility</div>
+          <div class="pattern-source">Descript</div>
+          <div class="pattern-desc">AI сам решает pipeline — чёрный ящик. «Бесшовный pipeline» ≠ «невидимый pipeline». Transparency = trust.</div>
+        </div>
+      </div>
+      <div class="pattern-item bad">
+        <div class="pattern-num">7</div>
+        <div>
+          <div class="pattern-title">Timeline-First Layout</div>
+          <div class="pattern-source">CapCut</div>
+          <div class="pattern-desc">Canvas + Timeline = NLE mental model. Timeline для монтажа, не для AI generation. Klyp = stages, не timeline.</div>
+        </div>
+      </div>
+      <div class="pattern-item bad">
+        <div class="pattern-num">8</div>
+        <div>
+          <div class="pattern-title">Одинаковый Layout для разных задач</div>
+          <div class="pattern-source">Luma</div>
+          <div class="pattern-desc">Все страницы = «Upload + Prompt + Cards». Скучно, неэффективно, нет visual cue «я на другом этапе».</div>
+        </div>
+      </div>
+      <div class="pattern-item bad">
+        <div class="pattern-num">9</div>
+        <div>
+          <div class="pattern-title">Зелёный неоновый акцент</div>
+          <div class="pattern-source">Kling — #7CFF00</div>
+          <div class="pattern-desc">Агрессивный, ассоциируется с gaming/crypto. «Казиношный матрас», не premium creative tool.</div>
+        </div>
+      </div>
+      <div class="pattern-item bad">
+        <div class="pattern-num">10</div>
+        <div>
+          <div class="pattern-title">Feature Soup / «All-in-One»</div>
+          <div class="pattern-source">CapCut Home</div>
+          <div class="pattern-desc">8+ capabilities на одном уровне без иерархии. Jack of all trades, master of none. Confusing entry.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     DIFFERENTIATORS
+     ═══════════════════════════════════════════ -->
+<section class="section" id="differentiators">
+  <div class="container">
+    <p class="label">Klyp Differentiators</p>
+    <h2 class="headline-l mt-8">Чего нет ни у кого из 13 конкурентов</h2>
+
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="num">Feature 01</div>
+        <h4>Serial Content Pipeline</h4>
+        <p>Эпизоды, сезоны, серии как first-class entities. Episode templates наследуют characters + style. «New Episode» ≠ «start from scratch».</p>
+      </div>
+      <div class="diff-card">
+        <div class="num">Feature 02</div>
+        <h4>Character Episode History</h4>
+        <p>В профиле персонажа — все кадры со всех эпизодов. Consistency растёт автоматически с каждым эпизодом.</p>
+      </div>
+      <div class="diff-card">
+        <div class="num">Feature 03</div>
+        <h4>Creation → Publishing</h4>
+        <p>Stage 6 → Library → Schedule → Publish → Analytics. Один клик от генерации до публикации. Все конкуренты = «скачай файл».</p>
+      </div>
+      <div class="diff-card">
+        <div class="num">Feature 04</div>
+        <h4>Built-in Social Sharing</h4>
+        <p>Share to TikTok / Instagram / YouTube прямо из Publishing Console. Из 13 платформ только Vidu имеет «+ Publish».</p>
+      </div>
+      <div class="diff-card">
+        <div class="num">Feature 05</div>
+        <h4>Pipeline Monitor</h4>
+        <p>Real-time статус всех файлов. Пользователь видит, какой AI обрабатывает файл: «Sora 2 processing... 67%».</p>
+      </div>
+      <div class="diff-card">
+        <div class="num">Feature 06</div>
+        <h4>Localization-First</h4>
+        <p>10-20 языков с первого дня. Обложки с раздельным image/text. Ни одна платформа не думает о multi-language serial content.</p>
+      </div>
+      <div class="diff-card">
+        <div class="num">Feature 07</div>
+        <h4>Dual Referral System</h4>
+        <p>Creator → Creator + Creator → Viewer. Из конкурентов только Luma и Descript имеют реферралку, обе single-tier.</p>
+      </div>
+      <div class="diff-card">
+        <div class="num">Feature 08</div>
+        <h4>Season Templates</h4>
+        <p>Characters + style + settings для сезона → каждый новый эпизод наследует всё. «Continue with established world».</p>
+      </div>
+      <div class="diff-card">
+        <div class="num">Feature 09</div>
+        <h4>Creator Analytics + Earnings</h4>
+        <p>Ни одна из 13 AI video платформ не имеет analytics. Только Vigloo (microdrama) имеет dashboard. Klyp объединяет всё.</p>
+      </div>
+      <div class="diff-card">
+        <div class="num">Feature 10</div>
+        <h4>Files Stay on Servers</h4>
+        <p>Zero download/reupload friction. Файлы передаются между AI-сервисами на серверах. У всех: «сгенерировал → скачал → загрузил».</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     THREATS
+     ═══════════════════════════════════════════ -->
+<section class="section" id="threats">
+  <div class="container">
+    <p class="label">Strategic Threats</p>
+    <h2 class="headline-l mt-8">Риски, за которыми следить</h2>
+
+    <div class="mt-32">
+      <div class="threat-card">
+        <div class="threat-level high">HIGH</div>
+        <div>
+          <div class="threat-name">Volcano Drama Creator (ByteDance)</div>
+          <div class="threat-desc">Seedance 2.0 + TikTok дистрибуция. Если откроют для внешних creators — прямой удар.</div>
+        </div>
+        <div class="threat-action">Скорость выхода на рынок = защита</div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-level medium">MEDIUM</div>
+        <div>
+          <div class="threat-name">StoReel Canvas</div>
+          <div class="threat-desc">$34M funding, 100 AI dramas/мес к концу 2026. Пока Canvas internal, не self-serve.</div>
+        </div>
+        <div class="threat-action">Window of opportunity для self-serve</div>
+      </div>
+      <div class="threat-card">
+        <div class="threat-level medium">MEDIUM</div>
+        <div>
+          <div class="threat-name">Runway Workflows commoditizing</div>
+          <div class="threat-desc">Pipeline как таковой уже не дифференциатор. Serial content + creator economy — да.</div>
+        </div>
+        <div class="threat-action">Фокус на serial content, не pipeline</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     BLUEPRINT
+     ═══════════════════════════════════════════ -->
+<section class="section" id="blueprint">
+  <div class="container">
+    <p class="label">Klyp Blueprint</p>
+    <h2 class="headline-l mt-8">Архитектура Video Editor — синтез 13 платформ</h2>
+
+    <div class="principles-grid">
+      <div class="principle">
+        <div class="principle-num">1</div>
+        <div>
+          <h5>Content-Centered</h5>
+          <p>Preview 9:16 всегда по центру</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">2</div>
+        <div>
+          <h5>Stage-Driven</h5>
+          <p>6 этапов как horizontal stepper</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">3</div>
+        <div>
+          <h5>Ingredients First</h5>
+          <p>Visual selectors → Sliders → Text prompt last</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">4</div>
+        <div>
+          <h5>Entity-Based</h5>
+          <p>Characters/Locations/Objects как reusable entities</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">5</div>
+        <div>
+          <h5>Serial-Native</h5>
+          <p>Episode History, Character Persistence, Season Templates</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">6</div>
+        <div>
+          <h5>Dual Mode</h5>
+          <p>Guided / Full Control в одном UI</p>
+        </div>
+      </div>
+      <div class="principle">
+        <div class="principle-num">7</div>
+        <div>
+          <h5>Pipeline Transparency</h5>
+          <p>Файлы текут между AI-сервисами, visible monitor</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="blueprint-box"><span class="dim">Master Layout: 1440 × 900</span>
+
+<span class="dim">┌──────────────────────────────────────────────────────────────────────────────────┐</span>
+<span class="hl">│ ◉ Klyp  │</span> <span class="g">[① Characters]</span> <span class="g">[② Scenes]</span> <span class="g">[③ Generate]</span> <span class="g">[④ Refine]</span> <span class="g">[⑤ Audio]</span> <span class="g">[⑥ Export]</span> <span class="dim">│</span> <span class="hl">[Guided ↔ Full]</span> <span class="dim">│</span> <span class="hl">⚡ 342</span>
+<span class="dim">├─────────┼──────────────────────────────────────────────────────────────┤────────────┤</span>
+<span class="dim">│         │                                                              │            │</span>
+<span class="dim">│</span> SIDEBAR <span class="dim">│                      </span><span class="hl">STAGE CONTENT</span><span class="dim">                          │  </span><span class="hl">CONTROLS</span><span class="dim">   │</span>
+<span class="dim">│</span> 200px   <span class="dim">│                      </span>(adaptive per stage)<span class="dim">                   │  </span>PANEL<span class="dim">      │</span>
+<span class="dim">│         │                                                              │  </span>320px<span class="dim">      │</span>
+<span class="dim">│ ─────── │                  ┌─────────────────────┐                     │            │</span>
+<span class="dim">│</span>Dashboard<span class="dim">│                  │                     │                     │ ┌────────┐ │</span>
+<span class="dim">│</span> Library <span class="dim">│                  │   </span><span class="hl">PREVIEW 9:16</span><span class="dim">      │                     │ │Params  │ │</span>
+<span class="dim">│</span><span class="g">&gt;Editor</span><span class="dim">  │                  │   centered          │                     │ │[Slider]│ │</span>
+<span class="dim">│</span>Analytics<span class="dim">│                  │   360 × 640         │                     │ │[Cards] │ │</span>
+<span class="dim">│</span>Earnings <span class="dim">│                  │                     │                     │ │Model: v│ │</span>
+<span class="dim">│</span>Referral <span class="dim">│                  └─────────────────────┘                     │ └────────┘ │</span>
+<span class="dim">│         │      [◄ prev]  Shot 3 of 12  [next ►]                     │            │</span>
+<span class="dim">│         │                                                              │ [</span><span class="hl">⚡Generate</span><span class="dim">]│</span>
+<span class="dim">├─────────┴──────────────────────────────────────────────────────────────┴────────────┤</span>
+<span class="dim">│</span> <span class="g">Pipeline:</span> Characters <span class="g">✓</span> → Scenes <span class="g">✓</span> → Shot 1 <span class="g">✓</span>  Shot 2 <span class="g">✓</span>  Shot 3 <span class="hl">◐ 67%</span>  → Shot 4 ○    <span class="dim">│</span>
+<span class="dim">│</span> <span class="hl">[Sora 2 processing... Est: 2 min]</span>                                                   <span class="dim">│</span>
+<span class="dim">└──────────────────────────────────────────────────────────────────────────────────────┘</span></div>
+
+    <p class="body-s mt-24">Sidebar 200px (fixed) + Stage Content 600px (fluid) + Controls 320px (fixed) + Bottom Pipeline Monitor 40px</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     NEXT STEPS
+     ═══════════════════════════════════════════ -->
+<section class="section" id="next">
+  <div class="container">
+    <p class="label">Recommendations</p>
+    <h2 class="headline-l mt-8">Что прототипировать первым</h2>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="priority p0">P0 — First</span>
+        <h4>Entry Points</h4>
+        <p>Три карточки: Capsule / Guided / Full Pipeline + Recent episodes. Первый экран после входа в Editor.</p>
+      </div>
+      <div class="step-card">
+        <span class="priority p0">P0 — First</span>
+        <h4>Character Setup</h4>
+        <p>RPG-style editor, Character Library, Consistency Score, Episode History. Ядро serial content.</p>
+      </div>
+      <div class="step-card">
+        <span class="priority p0">P0 — First</span>
+        <h4>Scene Composition</h4>
+        <p>Storyboard grid с @ mentions, shot cards, «Approve &amp; Generate». Storyboard preview ДО генерации.</p>
+      </div>
+      <div class="step-card">
+        <span class="priority p0">P0 — First</span>
+        <h4>Pipeline Monitor</h4>
+        <p>Persistent bottom bar с progress. Простой компонент, высокий impact на ощущение «бесшовности».</p>
+      </div>
+      <div class="step-card">
+        <span class="priority p1">P1 — Second</span>
+        <h4>Generation Stage</h4>
+        <p>Variant grid (4 варианта), per-shot approve/regenerate, model selector.</p>
+      </div>
+      <div class="step-card">
+        <span class="priority p1">P1 — Second</span>
+        <h4>Guided/Full Control</h4>
+        <p>Переключение visibility параметров. Один layout, два режима.</p>
+      </div>
+      <div class="step-card">
+        <span class="priority p1">P1 — Second</span>
+        <h4>Publishing Console: Library</h4>
+        <p>Grid/list/calendar views, title cards с inline-метриками, «Send to Library» flow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════ -->
+<footer class="footer">
+  <p>Klyp Competitive Research &bull; Валерий, Design Lead &bull; April 2026</p>
+  <p style="margin-top: 4px; color: var(--ink-4)">60+ платформ &bull; 13 детальных UX-разборов &bull; 75 скриншотов &bull; 4 research-потока</p>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     LIGHTBOX
+     ═══════════════════════════════════════════ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+function openLightbox(el) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  img.src = el.src;
+  img.alt = el.alt;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Active nav link highlight on scroll
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.style.color = '');
+      const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+      if (active) active.style.color = 'var(--ink)';
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
